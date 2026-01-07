@@ -1,0 +1,57 @@
+:root { --neon: #ff00ff; --bg: #0a0a0a; --panel: #161616; }
+* { touch-action: manipulation; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; display: flex; justify-content: center; padding: 10px; }
+
+.card { background: #111; padding: 15px; border-radius: 20px; width: 100%; max-width: 380px; border: 1px solid #333; box-shadow: 0 0 20px #ff00ff15; }
+
+/* 3D ARENA */
+.dice-3d-container { position: relative; width: 100%; height: 200px; background: #000; border: 2px solid var(--neon); border-radius: 15px; margin-bottom: 15px; overflow: hidden; }
+#dice-canvas { width: 100%; height: 100%; }
+#dice-ui { position: absolute; bottom: 5px; width: 100%; text-align: center; pointer-events: none; }
+#dice-total { font-size: 3em; color: var(--neon); font-weight: bold; line-height: 1; text-shadow: 0 0 10px var(--neon); }
+#dice-text { font-size: 0.7em; color: #888; text-transform: uppercase; }
+
+/* HEADER */
+.header-section { display: flex; align-items: center; margin-bottom: 15px; }
+.portrait { width: 65px; height: 65px; border: 2px solid var(--neon); border-radius: 50%; overflow: hidden; position: relative; margin-right: 12px; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; }
+.edit-overlay { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.6); font-size: 7px; text-align: center; color: var(--neon); padding: 2px; }
+.char-info { flex: 1; }
+.char-info input { background: transparent; border: none; border-bottom: 1px solid var(--neon); color: var(--neon); width: 100%; font-size: 1.1em; outline: none; margin-bottom: 4px; }
+.class-level-group { display: flex; align-items: center; gap: 5px; font-size: 0.8em; color: #888; }
+#char-level { width: 35px; background: #222; border: 1px solid #444; color: #fff; text-align: center; border-radius: 4px; }
+
+/* TABS */
+.tab-menu { display: flex; gap: 4px; margin-bottom: 15px; }
+.tab-btn { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #666; padding: 10px 0; border-radius: 8px; font-size: 0.7em; cursor: pointer; }
+.tab-btn.active { border-color: var(--neon); color: var(--neon); background: #251025; }
+.tab-content { display: none; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+/* STATS & HP */
+.combat-section { display: flex; gap: 10px; margin-bottom: 15px; }
+.stat-box { border: 2px solid var(--neon); padding: 8px; border-radius: 12px; min-width: 55px; text-align: center; }
+.hp-section { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.hp-controls { display: flex; align-items: center; gap: 5px; font-size: 1.1em; font-weight: bold; }
+.hp-controls input { width: 45px; background: transparent; border: none; color: #fff; text-align: center; font-size: 1em; }
+.hp-bar-bg { background: #222; height: 10px; border-radius: 5px; margin-top: 5px; overflow: hidden; border: 1px solid #333; }
+#hp-bar-fill { background: var(--neon); height: 100%; width: 50%; transition: 0.4s ease; box-shadow: 0 0 10px var(--neon); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+.stat-group { display: flex; justify-content: space-between; align-items: center; background: var(--panel); padding: 8px 12px; border-radius: 10px; border: 1px solid #333; }
+.stat-group input { width: 35px; background: transparent; border: none; color: #fff; text-align: center; font-weight: bold; font-size: 1em; }
+.mod { color: var(--neon); font-weight: bold; }
+
+.skill-row { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #222; font-size: 0.9em; }
+
+/* LISTE */
+.list-row { display: flex; gap: 5px; margin-bottom: 6px; }
+.list-row input { flex: 1; background: var(--panel); border: 1px solid #333; color: #fff; padding: 10px; border-radius: 8px; font-size: 0.9em; }
+.del-btn { background: #311; color: #f33; border: 1px solid #f33; padding: 0 12px; border-radius: 8px; }
+.add-btn { width: 100%; background: transparent; border: 1px dashed var(--neon); color: var(--neon); padding: 12px; border-radius: 10px; margin-top: 5px; }
+
+/* ORO */
+.money-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.money-item { background: var(--panel); padding: 12px; border-radius: 12px; border: 1px solid #333; text-align: center; }
+.money-item label { display: block; font-size: 0.7em; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+.money-item input { width: 80%; background: transparent; border: none; border-bottom: 1px solid #444; color: #fff; text-align: center; font-size: 1.2em; outline: none; }

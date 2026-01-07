@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>D&D Neon App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ff00ff">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+</head>
+<body>
+    <div class="card">
+        <div class="header-section">
+            <div class="portrait" onclick="document.getElementById('file-input').click()">
+                <img src="https://via.placeholder.com/80/ff00ff/ffffff?text=PG" id="char-img-display">
+                <input type="file" id="file-input" style="display:none" accept="image/*" onchange="cambiaAvatar(event)">
+                <div class="edit-overlay">MODIFICA</div>
+            </div>
+            <div class="char-info">
+                <input type="text" id="char-name" placeholder="Nome Personaggio" oninput="salvaDati()">
+                <div class="class-level-group">
+                    <input type="text" id="char-class" placeholder="Classe" oninput="salvaDati()">
+                    <label>Lv.</label>
+                    <input type="number" id="char-level" value="1" oninput="salvaDati()">
+                </div>
+            </div>
+        </div>
+
+        <div class="dice-3d-container">
+            <canvas id="dice-canvas"></canvas>
+            <div id="dice-ui">
+                <div id="dice-text">Tocca un'abilità per lanciare</div>
+                <div id="dice-total">--</div>
+            </div>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="openTab(event, 'stats')">PG</button>
+            <button class="tab-btn" onclick="openTab(event, 'combat')">Magie</button>
+            <button class="tab-btn" onclick="openTab(event, 'items')">Zaino</button>
+            <button class="tab-btn" onclick="openTab(event, 'money')">Oro</button>
+        </div>
+
+        <div id="tab-stats" class="tab-content active">
+            <div class="combat-section">
+                <div class="stat-box" onclick="lanciaDado('Iniziativa', 'dex')">
+                    <label>CA</label>
+                    <div id="ca-value">10</div>
+                </div>
+                <div class="hp-section">
+                    <div class="hp-controls">
+                        <input type="number" id="hp-current" value="20" oninput="aggiornaTutto()">
+                        <span>/</span>
+                        <input type="number" id="hp-max" value="20" oninput="aggiornaTutto()">
+                    </div>
+                    <div class="hp-bar-bg"><div id="hp-bar-fill"></div></div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-group"><label>STR</label><input type="number" id="str-score" value="10" oninput="aggiornaTutto()"><span id="str-mod" class="mod">+0</span></div>
+                <div class="stat-group"><label>DEX</label><input type="number" id="dex-score" value="10" oninput="aggiornaTutto()"><span id="dex-mod" class="mod">+0</span></div>
+                <div class="stat-group"><label>CON</label><input type="number" id="con-score" value="10" oninput="aggiornaTutto()"><span id="con-mod" class="mod">+0</span></div>
+                <div class="stat-group"><label>INT</label><input type="number" id="int-score" value="10" oninput="aggiornaTutto()"><span id="int-mod" class="mod">+0</span></div>
+                <div class="stat-group"><label>WIS</label><input type="number" id="wis-score" value="10" oninput="aggiornaTutto()"><span id="wis-mod" class="mod">+0</span></div>
+                <div class="stat-group"><label>CHA</label><input type="number" id="cha-score" value="10" oninput="aggiornaTutto()"><span id="cha-mod" class="mod">+0</span></div>
+            </div>
+            <div class="skills-container">
+                <div class="skill-row" onclick="lanciaDado('Atletica', 'str')">Atletica <span id="skill-athletics">+0</span></div>
+                <div class="skill-row" onclick="lanciaDado('Furtività', 'dex')">Furtività <span id="skill-stealth">+0</span></div>
+                <div class="skill-row" onclick="lanciaDado('Percezione', 'wis')">Percezione <span id="skill-perception">+0</span></div>
+                <div class="skill-row" onclick="lanciaDado('Arcano', 'int')">Arcano <span id="skill-arcana">+0</span></div>
+            </div>
+        </div>
+
+        <div id="tab-combat" class="tab-content">
+            <div id="list-spells"></div>
+            <button class="add-btn" onclick="addRow('list-spells', 'Magia')">+ Aggiungi Incantesimo</button>
+        </div>
+
+        <div id="tab-items" class="tab-content">
+            <div id="list-inv"></div>
+            <button class="add-btn" onclick="addRow('list-inv', 'Oggetto')">+ Aggiungi Oggetto</button>
+        </div>
+
+        <div id="tab-money" class="tab-content">
+            <div class="money-grid">
+                <div class="money-item"><label>Platino</label><input type="number" id="coin-pp" value="0" oninput="salvaDati()"></div>
+                <div class="money-item"><label>Oro</label><input type="number" id="coin-gp" value="0" oninput="salvaDati()"></div>
+                <div class="money-item"><label>Argento</label><input type="number" id="coin-sp" value="0" oninput="salvaDati()"></div>
+                <div class="money-item"><label>Rame</label><input type="number" id="coin-cp" value="0" oninput="salvaDati()"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
