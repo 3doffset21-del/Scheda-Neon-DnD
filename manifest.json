@@ -8,15 +8,16 @@
   "description": "Scheda personaggio D&D con d20 fisico 3D",
   "icons": [
     {
-      "src": "icona.png.jpg",
+      "src": "icona.png.",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icona.png.jpg",
+      "src": "icona.png.",
       "sizes": "512x512",
       "type": "image/png"
     }
   ]
 }
+
 
